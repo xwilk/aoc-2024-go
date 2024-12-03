@@ -57,13 +57,7 @@ func retry(lvls []int, badIndex int) int {
 	return analyzeReport(newLvls)
 }
 
-func RemoveIndex(s []int, index int) []int {
-	ret := make([]int, 0)
-	ret = append(ret, s[:index]...)
-	return append(ret, s[index+1:]...)
-}
-
-func day2Solution() {
+func day2Solution() (int, int) {
 	input := ReadInput("day2.input")
 	part1Solution := 0
 	part2Solution := 0
@@ -106,6 +100,5 @@ func day2Solution() {
 		}
 	}
 
-	fmt.Println("part1: ", part1Solution)
-	fmt.Println("part2: ", part2Solution)
+	return part1Solution, part2Solution
 }

@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-func day1Solution() {
+func day1Solution() (int, int) {
 	input := strings.Split(ReadInput("day1.input"), "\n")
 	left := make([]int, len(input))
 	right := make([]int, len(input))
@@ -59,6 +59,5 @@ func day1Solution() {
 		rightSimilarityScore += r * leftCounter[r]
 	}
 
-	fmt.Println("part2 - leftSimilarityScore: ", leftSimilarityScore)
-	fmt.Println("part2 - sum:", leftSimilarityScore+rightSimilarityScore)
+	return totalDist, leftSimilarityScore
 }
