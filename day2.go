@@ -1,19 +1,16 @@
 package main
 
 import (
-	"fmt"
 	"strconv"
 	"strings"
 )
 
 func analyzeReport(report []int) int {
-	fmt.Println(report)
 	last := -1
 	direction := 0
 	i := 0
 
 	for _, lvl := range report {
-		fmt.Printf(" %v", lvl)
 		if last == -1 {
 			last = lvl
 			continue
@@ -23,7 +20,6 @@ func analyzeReport(report []int) int {
 		}
 		distance := AbsInt(last - lvl)
 		if distance < 1 || distance > 3 {
-			// fmt.Println("distance: ", distance, last, lvl)
 			break
 		}
 
@@ -44,16 +40,13 @@ func analyzeReport(report []int) int {
 
 		i++
 		last = lvl
-		// fmt.Println("last: ", last)
 	}
 
 	return i
 }
 
 func retry(lvls []int, badIndex int) int {
-	fmt.Println("retry! index ", badIndex)
 	newLvls := RemoveIndex(lvls, badIndex)
-	fmt.Println(lvls)
 	return analyzeReport(newLvls)
 }
 
@@ -78,25 +71,19 @@ func day2Solution() (int, int) {
 		if index == len(lvls)-1 {
 			part1Solution++
 			part2Solution++
-			fmt.Println("safe report!")
 		} else {
 			if retry(lvls, index) == len(lvls)-2 {
 				part2Solution++
-				fmt.Println("safe report!")
 				continue
 			}
 			if retry(lvls, index+1) == len(lvls)-2 {
 				part2Solution++
-				fmt.Println("safe report!")
 				continue
 			}
 			if index > 0 && retry(lvls, index-1) == len(lvls)-2 {
 				part2Solution++
-				fmt.Println("safe report!")
 				continue
 			}
-
-			fmt.Println("bad report!")
 		}
 	}
 

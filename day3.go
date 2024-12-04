@@ -32,7 +32,5 @@ func day3Solution() (int, int) {
 		}
 	}
 
-	// 178794710
-	// 76729637
 	return part1, part2
 }
