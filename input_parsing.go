@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"log"
 	"os"
-	"strconv"
 	"strings"
 )
 
@@ -45,17 +44,15 @@ func ReadInputInto2DRunes(filename string) [][]rune {
 func ReadInputInto2DInts(filename string) [][]int {
 	input := ReadInput(filename)
 	lines := strings.Split(input, "\n")
-	result := make([][]int, len(lines)-1)
-	for i, line := range lines[:len(lines)-1] {
-		for j, c := range line {
-			n, err := strconv.Atoi(string(c))
-			if err != nil {
-				log.Fatalf("Rune is not a number! %c", c)
-			}
+	lines = lines[:len(lines)-1]
 
-			result[i][j] = n
+	matrix := make([][]int, len(lines))
+	for i, line := range lines {
+		matrix[i] = make([]int, len(line))
+		for j, c := range line {
+			matrix[i][j] = int(c)
 		}
 	}
 
-	return result
+	return matrix
 }
