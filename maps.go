@@ -57,6 +57,16 @@ func NextCardinalDirection(direction Direction) Direction {
 	}
 }
 
+type Position struct {
+	X int
+	Y int
+}
+
+type PathPoint struct {
+	Position
+	Direction
+}
+
 func CoordinatesInDirection(x, y int, direction Direction) (int, int) {
 	xD, yD := DirectionTo2DVector(direction)
 	return x + xD, y + yD
@@ -70,7 +80,7 @@ func PositionInDirection(pos Position, direction Direction) Position {
 	}
 }
 
-func IsInBounds(x, y int, input [][]rune) bool {
+func CoordsInBounds(x, y int, input [][]rune) bool {
 	if y > len(input)-1 || y < 0 || x < 0 || x > len(input[0])-1 {
 		return false
 	}
@@ -78,6 +88,6 @@ func IsInBounds(x, y int, input [][]rune) bool {
 	return true
 }
 
-func IsPosInBounds(pos Position, input [][]rune) bool {
-	return IsInBounds(pos.X, pos.Y, input)
+func PosInBounds(pos Position, input [][]rune) bool {
+	return CoordsInBounds(pos.X, pos.Y, input)
 }

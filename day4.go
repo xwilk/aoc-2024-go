@@ -7,7 +7,7 @@ var runeArray = [...]rune{'M', 'A', 'S'}
 func searchInDirection(input [][]rune, x, y int, direction Direction) bool {
 	for _, r := range runeArray {
 		x, y = CoordinatesInDirection(x, y, direction)
-		if !IsInBounds(x, y, input) {
+		if !CoordsInBounds(x, y, input) {
 			return false
 		}
 		if input[y][x] != r {
@@ -35,7 +35,10 @@ func xSearch(input [][]rune, x, y int) int {
 	xne, yne := CoordinatesInDirection(x, y, NorthEast)
 	xsw, ysw := CoordinatesInDirection(x, y, SouthWest)
 
-	if !IsInBounds(xnw, ynw, input) || !IsInBounds(xse, yse, input) || !IsInBounds(xne, yne, input) || !IsInBounds(xsw, ysw, input) {
+	if !CoordsInBounds(xnw, ynw, input) ||
+		!CoordsInBounds(xse, yse, input) ||
+		!CoordsInBounds(xne, yne, input) ||
+		!CoordsInBounds(xsw, ysw, input) {
 		return 0
 	}
 

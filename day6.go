@@ -4,16 +4,6 @@ import (
 // "fmt"
 )
 
-type Position struct {
-	X int
-	Y int
-}
-
-type PathPoint struct {
-	Position
-	Direction
-}
-
 func findStart(input [][]rune) Position {
 	for row := 0; row < len(input); row++ {
 		for col := 0; col < len(input); col++ {
@@ -46,11 +36,11 @@ func day6Solution() (int, int) {
 	direction := North
 	pos := startPos
 	visited := make(map[Position]bool, 0)
-	for IsPosInBounds(pos, input) {
+	for PosInBounds(pos, input) {
 		visited[pos] = true
 
 		posD := PositionInDirection(pos, direction)
-		for IsPosInBounds(posD, input) && input[posD.Y][posD.X] == '#' {
+		for PosInBounds(posD, input) && input[posD.Y][posD.X] == '#' {
 			direction = NextCardinalDirection(direction)
 			posD = PositionInDirection(pos, direction)
 		}
@@ -67,11 +57,11 @@ func day6Solution() (int, int) {
 		pos = startPos
 		direction = North
 		path := make(map[PathPoint]bool, 0)
-		for IsPosInBounds(pos, candidate) {
+		for PosInBounds(pos, candidate) {
 			path[PathPoint{pos, direction}] = true
 
 			posD := PositionInDirection(pos, direction)
-			for IsPosInBounds(posD, candidate) && candidate[posD.Y][posD.X] == '#' {
+			for PosInBounds(posD, candidate) && candidate[posD.Y][posD.X] == '#' {
 				direction = NextCardinalDirection(direction)
 				posD = PositionInDirection(pos, direction)
 			}
