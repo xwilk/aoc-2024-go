@@ -41,9 +41,33 @@ func DirectionTo2DVector(direction Direction) (int, int) {
 	}
 }
 
-func PositionInDirection(x, y int, direction Direction) (int, int) {
+func NextCardinalDirection(direction Direction) Direction {
+	switch direction {
+	case North:
+		return East
+	case East:
+		return South
+	case South:
+		return West
+	case West:
+		return North
+	default:
+		fmt.Println("Invalid direction")
+		return 0
+	}
+}
+
+func CoordinatesInDirection(x, y int, direction Direction) (int, int) {
 	xD, yD := DirectionTo2DVector(direction)
 	return x + xD, y + yD
+}
+
+func PositionInDirection(pos Position, direction Direction) Position {
+	xD, yD := DirectionTo2DVector(direction)
+	return Position{
+		X: pos.X + xD,
+		Y: pos.Y + yD,
+	}
 }
 
 func IsInBounds(x, y int, input [][]rune) bool {
@@ -52,4 +76,8 @@ func IsInBounds(x, y int, input [][]rune) bool {
 	}
 
 	return true
+}
+
+func IsPosInBounds(pos Position, input [][]rune) bool {
+	return IsInBounds(pos.X, pos.Y, input)
 }

@@ -13,6 +13,7 @@ var functionsMap = map[int]func() (int, int){
 	3: day3Solution,
 	4: day4Solution,
 	5: day5Solution,
+	6: day6Solution,
 }
 
 func parseDayInput() int {
