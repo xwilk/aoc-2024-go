@@ -1,6 +1,6 @@
 package main
 
-import ()
+import "time"
 
 var runeArray = [...]rune{'M', 'A', 'S'}
 
@@ -51,7 +51,7 @@ func xSearch(input [][]rune, x, y int) int {
 	return 0
 }
 
-func day4Solution() (int, int) {
+func day4Solution() (int, int, []time.Duration) {
 	input := ReadInputInto2DRunes("day4.input")
 	part1 := 0
 	part2 := 0
@@ -66,5 +66,5 @@ func day4Solution() (int, int) {
 		}
 	}
 
-	return part1, part2
+	return part1, part2, []time.Duration{}
 }

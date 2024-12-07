@@ -5,9 +5,20 @@ import (
 	"log"
 	"os"
 	"strconv"
+	"time"
 )
 
-var functionsMap = map[int]func() (int, int){
+func TimeIt(fn func() (int, int, []time.Duration)) func() (int, int, []time.Duration) {
+	return func() (int, int, []time.Duration) {
+		start := time.Now()
+		part1, part2, measurements := fn()
+		elapsed := time.Since(start)
+		fmt.Printf("Full execution time: %s\n", elapsed)
+		return part1, part2, measurements
+	}
+}
+
+var functionsMap = map[int]func() (int, int, []time.Duration){
 	1: day1Solution,
 	2: day2Solution,
 	3: day3Solution,
@@ -37,8 +48,9 @@ func main() {
 	day := parseDayInput()
 	f, exist := functionsMap[day]
 	if exist {
-		part1Solution, part2Solution := f()
+		part1Solution, part2Solution, measurements := TimeIt(f)()
 		fmt.Println("part1: ", part1Solution)
 		fmt.Println("part2: ", part2Solution)
+		fmt.Println("measurements: ", measurements)
 	}
 }

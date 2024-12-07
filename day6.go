@@ -1,7 +1,7 @@
 package main
 
 import (
-// "fmt"
+	"time"
 )
 
 func findStart(input [][]rune) Position {
@@ -27,7 +27,7 @@ func Copy2DSlice(input [][]rune) [][]rune {
 	}
 	return candidate
 }
-func day6Solution() (int, int) {
+func day6Solution() (int, int, []time.Duration) {
 	input := ReadInputInto2DRunes("day6.input")
 	part1 := 0
 	part2 := 0
@@ -75,5 +75,5 @@ func day6Solution() (int, int) {
 		}
 	}
 
-	return part1, part2
+	return part1, part2, []time.Duration{}
 }

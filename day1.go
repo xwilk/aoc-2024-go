@@ -4,9 +4,10 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"time"
 )
 
-func day1Solution() (int, int) {
+func day1Solution() (int, int, []time.Duration) {
 	input := strings.Split(ReadInput("day1.input"), "\n")
 	input = input[:len(input)-1]
 	left := make([]int, len(input))
@@ -31,5 +32,5 @@ func day1Solution() (int, int) {
 		part2 += n * counter[n]
 	}
 
-	return part1, part2
+	return part1, part2, []time.Duration{}
 }

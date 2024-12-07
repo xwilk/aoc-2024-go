@@ -3,6 +3,7 @@ package main
 import (
 	"strconv"
 	"strings"
+	"time"
 )
 
 func analyzeReport(report []int) int {
@@ -50,10 +51,10 @@ func retry(lvls []int, badIndex int) int {
 	return analyzeReport(newLvls)
 }
 
-func day2Solution() (int, int) {
+func day2Solution() (int, int, []time.Duration) {
 	input := ReadInput("day2.input")
-	part1Solution := 0
-	part2Solution := 0
+	part1 := 0
+	part2 := 0
 
 	for _, report := range strings.Split(input, "\n") {
 		if report == "" {
@@ -69,23 +70,23 @@ func day2Solution() (int, int) {
 		index := analyzeReport(lvls)
 
 		if index == len(lvls)-1 {
-			part1Solution++
-			part2Solution++
+			part1++
+			part2++
 		} else {
 			if retry(lvls, index) == len(lvls)-2 {
-				part2Solution++
+				part2++
 				continue
 			}
 			if retry(lvls, index+1) == len(lvls)-2 {
-				part2Solution++
+				part2++
 				continue
 			}
 			if index > 0 && retry(lvls, index-1) == len(lvls)-2 {
-				part2Solution++
+				part2++
 				continue
 			}
 		}
 	}
 
-	return part1Solution, part2Solution
+	return part1, part2, []time.Duration{}
 }

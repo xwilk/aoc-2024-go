@@ -5,9 +5,10 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+	"time"
 )
 
-func day3Solution() (int, int) {
+func day3Solution() (int, int, []time.Duration) {
 	input := ReadInput("day3.input")
 	part1 := 0
 	part2 := 0
@@ -32,5 +33,5 @@ func day3Solution() (int, int) {
 		}
 	}
 
-	return part1, part2
+	return part1, part2, []time.Duration{}
 }

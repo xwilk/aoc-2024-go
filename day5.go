@@ -3,6 +3,7 @@ package main
 import (
 	"strconv"
 	"strings"
+	"time"
 )
 
 func parseInput(filename string) (map[int][]int, [][]int) {
@@ -31,7 +32,7 @@ func parseInput(filename string) (map[int][]int, [][]int) {
 	return rules, updates
 }
 
-func day5Solution() (int, int) {
+func day5Solution() (int, int, []time.Duration) {
 	rules, updates := parseInput("day5.input")
 	part1 := 0
 	part2 := 0
@@ -97,7 +98,5 @@ func day5Solution() (int, int) {
 		part2 += update[len(update)/2]
 	}
 
-	// part1:  6612
-	// part2:  4944
-	return part1, part2
+	return part1, part2, []time.Duration{}
 }
