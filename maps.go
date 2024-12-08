@@ -4,6 +4,23 @@ import (
 	"fmt"
 )
 
+type Position struct {
+	X int
+	Y int
+}
+
+func MakeVector(pos, dest Position) Position {
+	return Position{X: dest.X - pos.X, Y: dest.Y - pos.Y}
+}
+
+func (p *Position) Add(other Position) Position {
+	return Position{X: p.X + other.X, Y: p.Y + other.Y}
+}
+
+func (p *Position) Sub(other Position) Position {
+	return Position{X: p.X - other.X, Y: p.Y - other.Y}
+}
+
 type Direction int
 
 const (
@@ -17,27 +34,27 @@ const (
 	NorthWest
 )
 
-func DirectionTo2DVector(direction Direction) (int, int) {
+func DirectionToVector2D(direction Direction) Position {
 	switch direction {
 	case North:
-		return 0, -1
+		return Position{0, -1}
 	case NorthEast:
-		return 1, -1
+		return Position{1, -1}
 	case East:
-		return 1, 0
+		return Position{1, 0}
 	case SouthEast:
-		return 1, 1
+		return Position{1, 1}
 	case South:
-		return 0, 1
+		return Position{0, 1}
 	case SouthWest:
-		return -1, 1
+		return Position{-1, 1}
 	case West:
-		return -1, 0
+		return Position{-1, 0}
 	case NorthWest:
-		return -1, -1
+		return Position{-1, -1}
 	default:
 		fmt.Println("Invalid direction")
-		return 0, 0
+		return Position{0, 0}
 	}
 }
 
@@ -57,27 +74,19 @@ func NextCardinalDirection(direction Direction) Direction {
 	}
 }
 
-type Position struct {
-	X int
-	Y int
-}
-
 type PathPoint struct {
 	Position
 	Direction
 }
 
 func CoordinatesInDirection(x, y int, direction Direction) (int, int) {
-	xD, yD := DirectionTo2DVector(direction)
-	return x + xD, y + yD
+	v := DirectionToVector2D(direction)
+	return x + v.X, y + v.Y
 }
 
 func PositionInDirection(pos Position, direction Direction) Position {
-	xD, yD := DirectionTo2DVector(direction)
-	return Position{
-		X: pos.X + xD,
-		Y: pos.Y + yD,
-	}
+	v := DirectionToVector2D(direction)
+	return pos.Add(v)
 }
 
 func CoordsInBounds(x, y int, input [][]rune) bool {
@@ -90,4 +99,10 @@ func CoordsInBounds(x, y int, input [][]rune) bool {
 
 func PosInBounds(pos Position, input [][]rune) bool {
 	return CoordsInBounds(pos.X, pos.Y, input)
+}
+
+func PrintMap(input [][]rune) {
+	for _, row := range input {
+		fmt.Println(string(row))
+	}
 }

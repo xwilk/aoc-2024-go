@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"regexp"
 	"strconv"
 	"strings"
@@ -17,7 +16,6 @@ func day3Solution() (int, int, []time.Duration) {
 	instructions := re.FindAllStringSubmatch(input, -1)
 	barrier := true
 	for _, instruction := range instructions {
-		fmt.Println("found ", instruction[0])
 
 		if strings.HasPrefix(instruction[0], "mul") {
 			n1, _ := strconv.Atoi(instruction[1])
