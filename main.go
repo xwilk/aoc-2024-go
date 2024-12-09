@@ -27,6 +27,7 @@ var functionsMap = map[int]func() (int, int, []time.Duration){
 	6: day6Solution,
 	7: day7Solution,
 	8: day8Solution,
+	9: day9Solution,
 }
 
 func parseDayInput() int {

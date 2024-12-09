@@ -19,14 +19,6 @@ func findStart(input [][]rune) Position {
 	return Position{0, 0}
 }
 
-func Copy2DSlice(input [][]rune) [][]rune {
-	candidate := make([][]rune, len(input))
-	for i := range input {
-		candidate[i] = make([]rune, len(input[i]))
-		copy(candidate[i], input[i])
-	}
-	return candidate
-}
 func day6Solution() (int, int, []time.Duration) {
 	input := ReadInputInto2DRunes("day6.input")
 	part1 := 0

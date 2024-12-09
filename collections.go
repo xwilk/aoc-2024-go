@@ -25,3 +25,17 @@ func RemoveIndex(s []int, index int) []int {
 	ret = append(ret, s[:index]...)
 	return append(ret, s[index+1:]...)
 }
+
+func CopySlice[T Ordered](s []T) []T {
+	c := make([]T, len(s))
+	copy(c, s)
+	return c
+}
+
+func Copy2DSlice(input [][]rune) [][]rune {
+	candidate := make([][]rune, len(input))
+	for i := range input {
+		candidate[i] = CopySlice(input[i])
+	}
+	return candidate
+}
