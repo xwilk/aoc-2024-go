@@ -58,6 +58,8 @@ func DirectionToVector2D(direction Direction) Position {
 	}
 }
 
+var CardinalDirections = []Direction{North, East, South, West}
+
 func NextCardinalDirection(direction Direction) Direction {
 	switch direction {
 	case North:
@@ -89,7 +91,7 @@ func PositionInDirection(pos Position, direction Direction) Position {
 	return pos.Add(v)
 }
 
-func CoordsInBounds(x, y int, input [][]rune) bool {
+func CoordsInBounds[T Ordered](x, y int, input [][]T) bool {
 	if y > len(input)-1 || y < 0 || x < 0 || x > len(input[0])-1 {
 		return false
 	}
@@ -97,7 +99,7 @@ func CoordsInBounds(x, y int, input [][]rune) bool {
 	return true
 }
 
-func PosInBounds(pos Position, input [][]rune) bool {
+func PosInBounds[T Ordered](pos Position, input [][]T) bool {
 	return CoordsInBounds(pos.X, pos.Y, input)
 }
 

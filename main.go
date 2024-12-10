@@ -19,15 +19,16 @@ func TimeIt(fn func() (int, int, []time.Duration)) func() (int, int, []time.Dura
 }
 
 var functionsMap = map[int]func() (int, int, []time.Duration){
-	1: day1Solution,
-	2: day2Solution,
-	3: day3Solution,
-	4: day4Solution,
-	5: day5Solution,
-	6: day6Solution,
-	7: day7Solution,
-	8: day8Solution,
-	9: day9Solution,
+	1:  day1Solution,
+	2:  day2Solution,
+	3:  day3Solution,
+	4:  day4Solution,
+	5:  day5Solution,
+	6:  day6Solution,
+	7:  day7Solution,
+	8:  day8Solution,
+	9:  day9Solution,
+	10: day10Solution,
 }
 
 func parseDayInput() int {

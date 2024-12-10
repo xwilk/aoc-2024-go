@@ -50,7 +50,7 @@ func ReadInputInto2DInts(filename string) [][]int {
 	for i, line := range lines {
 		matrix[i] = make([]int, len(line))
 		for j, c := range line {
-			matrix[i][j] = int(c)
+			matrix[i][j] = int(c) - 48
 		}
 	}
 
