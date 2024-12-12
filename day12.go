@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"time"
 )
 
@@ -51,113 +50,109 @@ func countPerimeter(area map[Position]bool) int {
 		perimeter += p
 	}
 
-	fmt.Println("p", perimeter)
 	return perimeter
 }
 
-func findTopLeft(area map[Position]bool) Position {
-	topLeft := Position{1000000, 1000000}
+func findMinY(area map[Position]bool) int {
+	minY := 1000000
 	for pos := range area {
-		if pos.Y < topLeft.Y {
-			topLeft = pos
-		} else if pos.Y == topLeft.Y && pos.X < topLeft.X {
-			topLeft = pos
+		if pos.Y < minY {
+			minY = pos.Y
 		}
 	}
 
-	return topLeft
+	return minY
 }
 
-type posAndDir struct {
-	p Position
-	d Direction
+func findMaxY(area map[Position]bool) int {
+	maxY := 0
+	for pos := range area {
+		if pos.Y > maxY {
+			maxY = pos.Y
+		}
+	}
+
+	return maxY
+}
+
+func findMinX(area map[Position]bool) int {
+	minX := 1000000
+	for pos := range area {
+		if pos.X < minX {
+			minX = pos.X
+		}
+	}
+
+	return minX
+}
+
+func findMaxX(area map[Position]bool) int {
+	maxX := 0
+	for pos := range area {
+		if pos.X > maxX {
+			maxX = pos.X
+		}
+	}
+
+	return maxX
 }
 
 func countSides(area map[Position]bool) int {
-	if len(area) == 1 {
-		fmt.Println(4)
-		return 4
-	}
+	minY := findMinY(area)
+	maxY := findMaxY(area)
+	minX := findMinX(area)
+	maxX := findMaxX(area)
 
-	topLeft := findTopLeft(area)
-	direction := East
-	sides := 1
-	pos := topLeft
-	first := true
-
-	for {
-		// time.Sleep(1 * time.Second)
-
-		leftTurnDirection := PreviousCardinalDirection(direction)
-		if !first {
-			if pos.X == topLeft.X && pos.Y == topLeft.Y && leftTurnDirection == North {
-				break
-			}
-		}
-		first = false
-		leftPos := PositionInDirection(pos, leftTurnDirection)
-		_, exists := area[leftPos]
-		if exists {
-			sides += 1
-			fmt.Println("Turning left:", direction, "at:", pos, "sides:", sides)
-			direction = leftTurnDirection
-			pos = leftPos
-			continue
-		}
-
-		if pos.X == topLeft.X && pos.Y == topLeft.Y && direction == North {
-			break
-		}
-		forwardPos := PositionInDirection(pos, direction)
-		_, exists = area[forwardPos]
-		if exists {
-			fmt.Println("Moving forward:", direction, "at:", pos, "sides:", sides)
-			pos = forwardPos
-			if pos.X == topLeft.X && pos.Y == topLeft.Y && direction == North {
-				break
-			}
-			continue
-		}
-
-		rightTurnDirection := NextCardinalDirection(direction)
-		if pos.X == topLeft.X && pos.Y == topLeft.Y && rightTurnDirection == North {
-			sides += 1
-			break
-		}
-		rightPos := PositionInDirection(pos, rightTurnDirection)
-		_, exists = area[rightPos]
-		if exists {
-			sides += 1
-			fmt.Println("Turning right:", direction, "at:", pos, "sides:", sides)
-			direction = rightTurnDirection
-			pos = rightPos
-			if pos.X == topLeft.X && pos.Y == topLeft.Y && direction == North {
-				break
-			}
-			continue
-		}
-
-		uTurnDirection := NextCardinalDirection(rightTurnDirection)
-		uTurnPos := PositionInDirection(pos, uTurnDirection)
-		_, exists = area[uTurnPos]
-		if exists {
-			sides += 2
-			fmt.Println("Turning around:", direction, "at:", pos, "sides:", sides)
-			direction = uTurnDirection
-			pos = uTurnPos
-			if pos.X == topLeft.X && pos.Y == topLeft.Y && direction == North {
-				break
+	sides := 0
+	for row := minY; row <= maxY; row++ {
+		for col := minX; col <= maxX; col++ {
+			if _, exists := area[Position{X: col, Y: row}]; exists {
+				_, aboveExists := area[Position{X: col, Y: row - 1}]
+				_, leftExists := area[Position{X: col - 1, Y: row}]
+				_, rightExists := area[Position{X: col + 1, Y: row}]
+				_, northWestExists := area[Position{X: col - 1, Y: row - 1}]
+				_, northEastExists := area[Position{X: col + 1, Y: row - 1}]
+				if !leftExists && !aboveExists {
+					sides += 1
+				} else if !leftExists && northWestExists {
+					sides += 1
+				}
+				if !rightExists && !aboveExists {
+					sides += 1
+				} else if !rightExists && northEastExists {
+					sides += 1
+				}
 			}
 		}
 	}
 
-	fmt.Println(sides)
+	for col := minX; col <= maxX; col++ {
+		for row := minY; row <= maxY; row++ {
+			if _, exists := area[Position{X: col, Y: row}]; exists {
+				_, aboveExists := area[Position{X: col, Y: row - 1}]
+				_, belowExists := area[Position{X: col, Y: row + 1}]
+				_, leftExists := area[Position{X: col - 1, Y: row}]
+				_, northWestExists := area[Position{X: col - 1, Y: row - 1}]
+				_, southWestExists := area[Position{X: col - 1, Y: row + 1}]
+				if !aboveExists && !leftExists {
+					sides += 1
+				} else if !aboveExists && northWestExists {
+					sides += 1
+				}
+				if !belowExists && !leftExists {
+					sides += 1
+				} else if !belowExists && southWestExists {
+					sides += 1
+				}
+			}
+		}
+	}
+
 	return sides
 }
 
 func day12Solution() (int, int, []time.Duration) {
-	// input := ReadInputInto2DRunes("day12.input")
-	input := ReadInputInto2DRunes("day12.testinput")
+	input := ReadInputInto2DRunes("day12.input")
 
 	areas := []map[Position]bool{}
 	assigned := map[Position]bool{}
@@ -177,6 +172,5 @@ func day12Solution() (int, int, []time.Duration) {
 		part2 += len(area) * countSides(area)
 	}
 
-	// 850842 too low
 	return part1, part2, []time.Duration{}
 }
