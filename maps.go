@@ -76,6 +76,38 @@ func NextCardinalDirection(direction Direction) Direction {
 	}
 }
 
+func PreviousCardinalDirection(direction Direction) Direction {
+	switch direction {
+	case North:
+		return West
+	case East:
+		return North
+	case South:
+		return East
+	case West:
+		return South
+	default:
+		fmt.Println("Invalid direction")
+		return 0
+	}
+}
+
+func OppositeDirection(direction Direction) Direction {
+	switch direction {
+	case North:
+		return South
+	case East:
+		return West
+	case South:
+		return North
+	case West:
+		return East
+	default:
+		fmt.Println("Invalid direction")
+		return 0
+	}
+}
+
 type PathPoint struct {
 	Position
 	Direction
