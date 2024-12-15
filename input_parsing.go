@@ -31,10 +31,14 @@ func ReadInput(filename string) string {
 }
 
 func ReadInputInto2DRunes(filename string) [][]rune {
-	input := ReadInput(filename)
+	return InputTo2DRunes(ReadInput(filename))
+}
+
+func InputTo2DRunes(input string) [][]rune {
+	input = strings.TrimSuffix(input, "\n")
 	lines := strings.Split(input, "\n")
-	result := make([][]rune, len(lines)-1)
-	for i, line := range lines[:len(lines)-1] {
+	result := make([][]rune, len(lines))
+	for i, line := range lines {
 		result[i] = []rune(line)
 	}
 
