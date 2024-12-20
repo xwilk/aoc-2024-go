@@ -48,3 +48,32 @@ func RoundToPrecision(value float64, precision int) float64 {
 	multiplier := math.Pow10(precision)
 	return math.Round(value*multiplier) / multiplier
 }
+
+// GCD using the Euclidean algorithm
+func gcd(a, b int) int {
+	for b != 0 {
+		a, b = b, a%b
+	}
+	return a
+}
+
+// LCM for two numbers
+func lcm(a, b int) int {
+	if a == 0 || b == 0 {
+		return 0 // LCM is undefined if either number is 0
+	}
+	return AbsInt(a*b) / gcd(a, b)
+}
+
+// LCM for multiple numbers
+func lcmMultiple(nums []int) int {
+	if len(nums) == 0 {
+		return 0 // No numbers, no LCM
+	}
+
+	result := nums[0]
+	for _, num := range nums[1:] {
+		result = lcm(result, num)
+	}
+	return result
+}
