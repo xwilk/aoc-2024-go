@@ -123,6 +123,36 @@ func PositionInDirection(pos Position, direction Direction) Position {
 	return pos.Add(v)
 }
 
+func PositionsInDistance2(pos Position) []Position {
+	return []Position{
+		Position{pos.X, pos.Y - 2},
+		Position{pos.X + 1, pos.Y - 1},
+		Position{pos.X + 2, pos.Y},
+		Position{pos.X + 1, pos.Y + 1},
+		Position{pos.X, pos.Y + 2},
+		Position{pos.X - 1, pos.Y + 1},
+		Position{pos.X - 2, pos.Y},
+		Position{pos.X - 1, pos.Y - 1},
+	}
+}
+
+func PositionsWithinDistance(minD, maxD int, pos Position) []Position {
+	positions := []Position{}
+	for y := pos.Y - maxD; y <= pos.Y+maxD; y++ {
+		for x := pos.X - maxD; x <= pos.X+maxD; x++ {
+			if Distance(Position{x, y}, pos) >= minD && Distance(Position{x, y}, pos) <= maxD {
+				positions = append(positions, Position{x, y})
+			}
+		}
+	}
+
+	return positions
+}
+
+func Distance(a, b Position) int {
+	return AbsInt(a.X-b.X) + AbsInt(a.Y-b.Y)
+}
+
 func CoordsInBounds[T Ordered](x, y int, input [][]T) bool {
 	if y > len(input)-1 || y < 0 || x < 0 || x > len(input[0])-1 {
 		return false

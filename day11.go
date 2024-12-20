@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"math"
 	"strconv"
 	"strings"
@@ -42,11 +41,9 @@ func blink(n, i, t int) int {
 }
 
 func blinks(nums []int, t int) int {
-	fmt.Printf("nums: %v, iterations: %v\n", nums, t)
 	total := 0
 	for _, n := range nums {
 		total += blink(n, 0, t)
-		fmt.Printf("n: %v, total: %v\n", n, total)
 	}
 	return total
 }
